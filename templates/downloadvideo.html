@@ -1,0 +1,145 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>YT Downloader</title>
+</head>
+<body
+    style="background-image: url('/static/bg3.svg'); background-repeat: no-repeat;background-attachment: fixed;background-size: cover;">
+
+
+    <div class="container-fluid px-0">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="/">
+                <h5>Youtube Video Downloader</h5>
+            </a>
+        </nav>
+    </div>
+    <center>
+<div class="container my-5">
+
+
+    <a href="/"><button type="button" class="btn btn-outline-light active">Download Single Video</button></a>
+    <a href="playlist/"><button type="button" class="btn btn-outline-light">Download Playlist</button></a>
+</div>
+</center>
+<br>
+
+
+<div class="container">
+<br>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
+    {% endfor %}
+</div>
+{% endif %}
+</div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="card" style="width: 18rem;">
+                <img src={{thumbnail}} class="card-img-top">
+                <div class="card-body">
+                    <p class="card-text">{{Title}}</p>
+                    <p class="card-text">Views : {{views}}</p>
+                    <p class="card-text">Rating : {{rating}}</p>
+
+                </div>
+            </div>
+
+            <div class="col">
+                <table class="table table-hover table-light">
+                    <thead>
+                        <tr>
+                            <h5 style="color: white;">Your Video</h5>
+                            <th scope="col">Quality</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                    </thead>
+                    {% for i in strm %}
+                    <tbody>
+                        <tr>
+                            <td>{{i.resolution}}</td>
+                            <td>{{i.filesize}}</td>
+                            <td>
+
+                                <form action="{% url 'downloader:downloading' i.resolution %}" method="post"
+                                    class="post-form">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-outline-success" value="DOWNLOAD"> 
+
+
+                                    </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+
+
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr>
+                                <h5 style="color: white;">Audio Only</h5>
+                                <th scope="col">Quality</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Download</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td>{{audio.abr}}</td>
+                                <td>{{audio.filesize}}</td>
+                                <td>
+                                    <form action="{% url 'downloader:downloadingaudio' audio.itag %}" method="post" class="post-form"> {% csrf_token %} <input
+                                            type="submit" class="btn btn-outline-success" value="DOWNLOAD"> </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+            </div>
+        </div>
+    </div>
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
